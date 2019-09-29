@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import useResources from './useResources';
 
 // class ResourceList extends React.Component {
 //   state = { resources: [] };
@@ -22,19 +22,30 @@ import axios from 'axios';
 // }
 
 const ResourceList = ({ resource }) => {
-  const [ resources, setResources ] = useState([]);
+  // const [ resources, setResources ] = useState([]);
 
-  const fetchResource = async (resource) => {
-    const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`);
-    setResources(response.data);
-  }
+  // const fetchResource = async (resource) => {
+  //   const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`);
+  //   setResources(response.data);
+  // }
 
-  useEffect(() => {
-    fetchResource(resource);
-  }, [resource])
+  // useEffect(() => {
+    // fetchResource(resource);
+  //   (async (resource) => {
+  //     const response = await axios.get(`https://jsonplaceholder.typicode.com/${resource}`);
+  //     setResources(response.data);
+  //   })(resource)
+  // }, [resource])
   // if useEffect's second argument's value is the same, the arrow function will not be called
+  // if put an empty array as secon argument, the funtion will only be called one time, like in componentDidMount 
 
-  return <div>{resources.length}</div>
+  const resources = useResources(resource);
+
+  return (
+    <ul>{resources.map(record => (
+      <li key={record.id}>{record.title}</li>
+    ))}</ul>
+  )
 }
 
 export default ResourceList;
